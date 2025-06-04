@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <Meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Personajes API</title>
+        </head>
+        <body>
+            <style>
+                *{
+                    box-sizing: border-box;
+                }
+                :root{
+                   --primary-color: #cd4631;
+                   --secondary-color: #9e6240;
+                   --terceary-color: #050505;
+                   --cuarto--color: #ff7d00;
+                   --quinto--color: #c44900;
+                }
+                body{
+                    background-color: var(--primary-color);
+                    font-family: 'segoe UI', Tahoma, Geneva, verdana, sans-serif;
+                    margin: 0;
+                }
+                header{
+                    padding: 15 px;
+                    display: flex;
+                    justify-content: flex-end;
+                    background-color: var(--secondary-color);
+                }
+                .search{
+                    background-color: white;
+                    border: 5px solId var(--terceary-color);
+                    border-radius: 50px;
+                    font-family:Verdana, Geneva, Tahoma, sans-serif;
+                    font-size: 15px;
+                    padding: 8px 15px;
+                    color: var(--primary-color);
+                }
+                .search::placeholder{
+                    color: black
+                }
+                .search:focus{
+                    outline: none;
+                    background-color: #fff
+                }
+                main{
+                    display: flex;
+                    flex-wrap: wrap;
+                    justify-content: center;
+                }
+                .personaje{
+                    width: 400px;
+                    margin: 15px;
+                    background-color: var(--secondary-color);
+                    box-shadow: 10px 15px 1px black;
+                    position: relative;
+                    overflow: hidden;
+                    border-radius: 20px;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: flex-start;
+                    align-items: center;
+                }
+                .personaje img{
+                    width: 88%;
+                    height: 400px;
+                    object-fit: contain;
+                }
+                .personaje-info{
+                    color: var(--terceary-color);
+                    display: flex;
+                    align-items:center;
+                    justify-content: space-between;
+                    gap: 15px;
+                    padding:0.8px 15px 15px;
+                    letter-spacing: 5px;
+                }
+                .personaje-info h3{
+                    margin-top: 0;
+                }
+                .personaje-info span{
+                    background-color: var(--primary-color);
+                    padding: 5px;
+                    border-radius: 5px;
+                    font-weight: bold;
+                }
+                .personaje-info span.blue{
+                    color: blue;
+                }
+                .personaje-info span.orange{
+                    color: orangered;
+                }
+                .personaje-info span.red{
+                    color: red;
+                }
+                .overview{
+                    background-color: #fff;
+                    padding: 15px;
+                    position: absolute; 
+                    left: 0;
+                    bottom: 0;
+                    right: 0;
+                    max-height:100%;
+                    transform: translateY(101%);
+                    overflow-y: auto;
+                    transition: transform 1s ease-in;
+                }
+                .personaje:hover .overview{
+                    transform: translateY(0);
+                }
+            </style>
+           <header>
+
+            <img src="dbz.png.png" alt="logo" style="width: 50px">
+            <form id="form">
+            <input type="text" id="search" class="search" placeholder="busca tu personaje">
+           </form>
+        </header>
+    <main id="main"></main>
+<script>
+    const  API_URL = 'https://dragonball-api.com/api/characters';
+    const main = document.getElementById('main');
+    const form = document.getElementById('form');
+    const search = document.getElementById('search');
+
+    getCharacters(API_URL)
+    async function getPersonajes(url){
+        const res = await fetch(url);
+        const data = await res.json();
+        showpersonajes(data.items || data);
+    }
+    function showCharacters(characters){
+        main.innerHTML = '';
+
+        characters.forEach((personajes) => {
+            const {id, name, image, ki, maxKi, race, gender, description} = personajes;
+            const PersonajesElements = document.createElement('div');
+            CharElements.classList.add('personaje');
+            CharElements.innerHTML=`
+            <img src = "${image}" alt="${title}">
+            <div class="personaje-info">
+            <h1>${id}</h1>
+            <h3>${name}</h3>
+            <br>
+            ${race}
+            </div>
+            <div class="overview">
+            <h3> description</h3
+            <p>strong>Ki</strong> ${ki}</p>
+            ${description}
+            </div>
+            main.appendChild(charElement);
+
+
+                <h3>${title}</h3>
+                <span class = "${getClassByRate(vote_average)}">
+                    ${vote_average}</span>
+                    </div>
+                    <div class = "overview">
+                        <h3>Overview</h3>
+                        ${overview}
+                        </div>`
+                        main.appendChild(movieElements);    
+        });}
+
+            form.addEventListener('submit', (e) =>{
+                e.preventDefault()
+                const searchTerm = search.value.tolowerCase();
+                if (searchTerm && searchTerm !== ''){
+                    getCharacters(API_URL + searchTerm)
+                    search.value='';
+                }else{ 
+                    window.location.reload();
+                }
+            })
+</script>
+        </body>
